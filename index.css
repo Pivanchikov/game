@@ -21,3 +21,19 @@
     background-color: skyblue;
     width : 100px;
 }
+
+
+
+@media screen {
+  .box {
+    margin-left : 40%;
+    margin-top : 50%;
+    align-content: center;
+    transform: scale(2.5);
+  }
+  .start {
+    text-align: center;
+    font-size: 70px;
+    width: auto;
+  }
+}
