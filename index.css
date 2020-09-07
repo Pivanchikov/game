@@ -1,0 +1,23 @@
+.box {
+    margin-top: 10px;
+    width : 225px;
+    height: 240px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: black;
+}
+
+.hole {
+  background-color : yellow;
+  width : 50px;
+  height : 50px;
+  margin-top: 5px;
+  text-align: center;
+  line-height: 50px;
+}
+
+.start {
+    background-color: skyblue;
+    width : 100px;
+}
