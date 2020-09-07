@@ -24,7 +24,10 @@
 
 
 
-@media screen {
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 580px)
+{
   .box {
     margin-left : 40%;
     margin-top : 50%;
