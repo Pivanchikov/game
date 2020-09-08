@@ -29,10 +29,17 @@
   and (max-device-width: 580px)
 {
   .box {
-    margin-left : 40%;
-    margin-top : 50%;
+    margin-left: 10%;
     align-content: center;
-    transform: scale(2.5);
+    width : 800px;
+    height: 800px;
+  }
+
+  .hole {
+    width : 190px;
+    height: 190px;
+    font-size: 70px;
+    line-height: 190px;
   }
   .start {
     text-align: center;
