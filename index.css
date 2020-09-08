@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     background-color: black;
+    margin-bottom: 10px;
 }
 
 .hole {
@@ -15,11 +16,23 @@
   margin-top: 5px;
   text-align: center;
   line-height: 50px;
+  cursor: pointer;
 }
 
 .start {
     background-color: skyblue;
     width : 100px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-between;
+  flex-wrap: wrap;
+  width: 225px;
+  height: 50px;
 }
 
 
