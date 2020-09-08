@@ -3,13 +3,17 @@ window.onload = function load() {
 
     let array = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,' '];
     let timeout;
+    
     function random(arr) {
     arr.pop()
     array = arr.sort(function(){
         return Math.random() - 0.5;
       });
     array.push(' ');
+
    document.body.removeChild(document.body.children[2]);
+   document.querySelector('.step').textContent = 'Кол-во шагов';
+
     clearInterval(timeout);
     draw()
     go()
