@@ -45,31 +45,51 @@ window.onload = function load() {
         random(array)
     })
 
+    function congratulated () {
+        let arrayCell = document.querySelectorAll('.hole');
+        let count = true;
+        for (let i = 0; i < arrayCell.length; i++) {
+            if (+arrayCell[i].textContent !== 1 + i && i !== arrayCell.length - 1) {
+                count = false
+            }
+        }
+        if (count) {
+            alert('Поздравляем! Вы победили')
+        }
+    }
+    
+
     function go() {
     let cell = document.querySelectorAll('.hole');
     cell.forEach((div, index) => div.addEventListener('click',
      function () {
 
-         if (cell[index + 1] !== undefined && cell[index + 1].textContent == ' ') {
-            cell[index + 1].textContent = cell[index].textContent
-            cell[index].textContent = ' '  
+         if (cell[index + 1] !== undefined  && cell[index + 1].textContent == ' ') {
+                if(index !== 11 && index !== 3 && index !== 7) {
+            cell[index + 1].textContent = cell[index].textContent;
+            cell[index].textContent = ' ' ;
+                } 
          }
 
          if (cell[index + 4] !== undefined && cell[index + 4].textContent == ' ') {
-            cell[index + 4].textContent = cell[index].textContent
-            cell[index].textContent = ' '  
+            cell[index + 4].textContent = cell[index].textContent;
+            cell[index].textContent = ' ';  
          }
 
          if (cell[index - 1] !== undefined && cell[index - 1].textContent == ' ') {
-            cell[index - 1].textContent = cell[index].textContent
-            cell[index].textContent = ' '  
+            if(index !== 4 && index !== 8 && index !== 12) {
+                cell[index - 1].textContent = cell[index].textContent;
+                cell[index].textContent = ' ';
+            }  
          }
          
          if (cell[index - 4] !== undefined && cell[index - 4].textContent == ' ') {
-            cell[index - 4].textContent = cell[index].textContent
-            cell[index].textContent = ' '  
+            cell[index - 4].textContent = cell[index].textContent;
+            cell[index].textContent = ' ';  
          }
-    }))
+         
+         congratulated ()
+        }))
     }
 }
 
