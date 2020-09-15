@@ -3,7 +3,9 @@ window.onload = function load() {
 
     let array = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,' '];
     let timeout;
-    
+    let counter = 0;
+    let side = 4;
+
     function random(arr) {
     arr.pop()
     array = arr.sort(function(){
@@ -11,14 +13,17 @@ window.onload = function load() {
       });
     array.push(' ');
 
-   document.body.removeChild(document.body.children[2]);
-   document.querySelector('.step').textContent = 'Кол-во шагов';
-
-    clearInterval(timeout);
-    draw()
-    go()
+    redraw()
     }
 
+    function redraw() {
+        document.body.removeChild(document.body.children[3]);
+        document.querySelector('.step').textContent = '0';
+        document.querySelector('.timer').textContent = '00:00:00'
+         clearInterval(timeout);
+         draw()
+         go()
+    }
 
     function timer() {
         let hour = '00';
@@ -47,9 +52,9 @@ window.onload = function load() {
             }
 
             if (counter < 10 ) {
-                timer.textContent = `${hour} : ${minutes} : 0${counter} `;
+                timer.textContent = `${hour}:${minutes}:0${counter} `;
             } else {
-            timer.textContent = `${hour} : ${minutes} : ${counter} `;
+            timer.textContent = `${hour}:${minutes}:${counter} `;
             }
 
         }, 1000)
@@ -68,7 +73,7 @@ window.onload = function load() {
         let time = document.createElement('div');
         time.classList.add('start');
         time.classList.add('timer');
-        time.innerHTML = 'Ваше время'
+        time.innerHTML = '00:00:00'
         buttons.append(time)
 
         let start = document.createElement('div');
@@ -80,31 +85,63 @@ window.onload = function load() {
         let step = document.createElement('div');
         step.classList.add('start');
         step.classList.add('step');
-        step.textContent = 'Кол-во шагов'
+        step.textContent = '0'
         buttons.append(step)
+
+        let boxSize =  document.createElement('div');
+        boxSize.classList.add('boxSize');
+        document.querySelector('.box').before(boxSize)
+
+        for (let i = 0; i < 6; i++) {
+        let size =  document.createElement('div');
+        size.classList.add('size');
+        size.innerHTML = ` ${i+3} x ${i+3}`
+        boxSize.append(size)
+        }
     }
+
+    
 
     function draw() {
         let box = document.createElement('div');
         box.classList.add('box');
-        document.body.append(box)
+        box.style.width = side * 50 + 25 + 'px'
+        document.body.append(box);
 
-        for ( let i = 0 ; i < 16; i++) {
+        for ( let i = 0 ; i < side*side - 1; i++) {
         let hole =  document.createElement('div');
         hole.classList.add('hole');
         hole.innerHTML = array[i]
         box.append(hole)
         }
 
+        let hole =  document.createElement('div');
+        hole.classList.add('hole');
+        hole.classList.add('holes');
+        hole.innerHTML = ' '
+        box.append(hole)
     }
 
     draw()
     buttons()
     go()
     
-    let button = document.querySelector('.start')
-    button.addEventListener('click', function() {
-        random(array)
+
+    let changeSize = document.querySelectorAll('.size');
+    changeSize.forEach((item) => item.addEventListener('click',
+    function () {
+        side = parseInt(item.textContent)
+        array = []
+        for (let i = 1 ; i < side*side; i++){
+            array.push(i)
+        }
+        array.push(' ')
+     redraw()
+ }))
+
+     let start = document.querySelector('.start')
+    start.addEventListener('click', function() {
+        random(array) 
     })
 
     let started = document.querySelector('.started')
@@ -122,48 +159,64 @@ window.onload = function load() {
             }
         }
         if (count) {
+            let timer = document.querySelector('.timer').textContent;
+            
+            if (timer !== '00:00:00'){
             clearInterval(timeout);
-            alert('Поздравляем! Вы победили')
+            alert(  `Ура! Вы победили за ${timer} и  ${counter} ходов`)
+             counter = 0;
+            } else {
+                alert(  `Ура! Вы победили за ${counter} ходов`);
+                counter = 0;
+            }
         }
     }
     
     function go() {
-        let counter = 0;
-        let step = document.querySelector('.step');
+        
+    let step = document.querySelector('.step');
     let cell = document.querySelectorAll('.hole');
     cell.forEach((div, index) => div.addEventListener('click',
      function () {
 
          if (cell[index + 1] !== undefined  && cell[index + 1].textContent == ' ') {
-                if(index !== 11 && index !== 3 && index !== 7) {
+                if((index+1)%side) {
             cell[index + 1].textContent = cell[index].textContent;
+            cell[index + 1].classList.remove('holes')
             cell[index].textContent = ' ' ;
+            cell[index].classList.add('holes')
             counter++
                 } 
          }
 
-         if (cell[index + 4] !== undefined && cell[index + 4].textContent == ' ') {
-            cell[index + 4].textContent = cell[index].textContent;
+         if (cell[index + side] !== undefined && cell[index + side].textContent == ' ') {
+            cell[index + side].textContent = cell[index].textContent;
+            cell[index + side].classList.remove('holes')
             cell[index].textContent = ' ';  
+            cell[index].classList.add('holes')
             counter++
          }
 
          if (cell[index - 1] !== undefined && cell[index - 1].textContent == ' ') {
-            if(index !== 4 && index !== 8 && index !== 12) {
+            if(index%side) {
                 cell[index - 1].textContent = cell[index].textContent;
+                cell[index - 1].classList.remove('holes')
                 cell[index].textContent = ' ';
+                cell[index].classList.add('holes')
                 counter++
             }  
          }
          
-         if (cell[index - 4] !== undefined && cell[index - 4].textContent == ' ') {
-            cell[index - 4].textContent = cell[index].textContent;
+         if (cell[index - side] !== undefined && cell[index - side].textContent == ' ') {
+            cell[index - side].textContent = cell[index].textContent;
+            cell[index - side].classList.remove('holes')
             cell[index].textContent = ' '; 
+            cell[index].classList.add('holes')
             counter++ 
          }
          
          step.textContent = counter;
-         congratulated ()
+         if (counter) {congratulated()}
         }))
     }
 }
